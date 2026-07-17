@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="handleSortDialogConfirm">
+		<sortItems>
+			<ViewSettingsItem text="{i18n>salesOrganization}" key="salesOrg" selected="true" />
+			<ViewSettingsItem text="{i18n>billingType}" key="invoiceType" />
+			<ViewSettingsItem text="{i18n>outputType}" key="outputType" />
+			<ViewSettingsItem text="{i18n>langKey}" key="langKey" />
+			<ViewSettingsItem text="{i18n>valueType}" key="valueType" />
+			<ViewSettingsItem text="{i18n>fileType}" key="fileType" />
+			<ViewSettingsItem text="{i18n>fileGroupID}" key="fileGid" />
+			<ViewSettingsItem text="{i18n>fileGroup}" key="fileGroup" />
+			<ViewSettingsItem text="{i18n>description}" key="descriptions" />
+		</sortItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

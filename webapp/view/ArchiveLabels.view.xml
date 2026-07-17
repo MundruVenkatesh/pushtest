@@ -1,0 +1,228 @@
+<mvc:View controllerName="com.archivelabels.zesparchivelabels.controller.ArchiveLabels"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form">
+    <Page id="page" titleAlignment="Center" title="{i18n>title}" busy="{ReportModel>/isDataSaving}">
+        <content>
+
+
+            <f:Form id="ArchivalLabelsForm" editable="true">
+                <f:layout>
+                    <f:ResponsiveGridLayout singleContainerFullSize="true" />
+                </f:layout>
+                <f:formContainers>
+                    <f:FormContainer>
+                        <f:formElements>
+                            <f:FormElement  >
+                                <f:fields>
+                                    <Label class="sapUiTinyMarginTop" textAlign="End" showColon="true" text="{i18n>salesOrganization}" design="Bold">
+                                        <layoutData>
+                                            <l:GridData span="XL4 L4 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                    <MultiComboBox id="salesOrgMCBox" selectionChange="handleSalesOrgSelectionChange" selectionFinish="handleSalesOrgSelectionFinish" items="{path: 'SearchModel>/SalesOrgData'}">
+                                        <core:Item key="{SearchModel>Vkorg}" text="{SearchModel>Vkorg}" />
+                                        <layoutData>
+                                            <l:GridData span="XL2 L2 M2 S12" />
+                                        </layoutData>
+                                    </MultiComboBox>
+                                    <Label design="Bold" class="sapUiTinyMarginTop" textAlign="End" showColon="true" text="{i18n>langKey}">
+                                        <layoutData>
+                                            <l:GridData span="XL1 L1 M2 S12" />
+                                        </layoutData>
+                                    </Label>
+                                    <MultiComboBox id="langKeyMCBox" selectionChange="handlelangKeySelectionChange" selectionFinish="handlelangKeySelectionFinish" items="{path: 'SearchModel>/LanguangeData'}">
+                                        <core:Item key="{SearchModel>Laiso}" text="{SearchModel>Laiso}" />
+                                        <layoutData>
+                                            <l:GridData span="XL2 L2 M2 S12" />
+                                        </layoutData>
+                                    </MultiComboBox>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement >
+                                <f:fields>
+                                    <Label design="Bold" class="sapUiTinyMarginTop" textAlign="End" showColon="true" text="{i18n>billingType}">
+                                        <layoutData>
+                                            <l:GridData span="XL4 L4 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                    <MultiComboBox id="billingTypeMCBox" selectionChange="handleBillingTypeSelectionChange" selectionFinish="handleBillingTypeSelectionFinish" items="{path: 'SearchModel>/BillingTypeData'}">
+                                        <core:Item key="{SearchModel>Fkart}" text="{SearchModel>Vtext}" />
+                                        <layoutData>
+                                            <l:GridData span="XL2 L2 M2 S12" />
+                                        </layoutData>
+                                    </MultiComboBox>
+                                    <Label design="Bold" class="sapUiTinyMarginTop" textAlign="End" showColon="true" text="{i18n>valueType}">
+                                        <layoutData>
+                                            <l:GridData span="XL1 L1 M2 S12" />
+                                        </layoutData>
+                                    </Label>
+                                    <MultiComboBox id="valueTypeMCBox" selectionChange="handleValueTypeSelectionChange" selectionFinish="handleValueTypeSelectionFinish" items="{path: 'SearchModel>/ValueTypeData'}">
+                                        <core:Item key="{SearchModel>Valuetype}" text="{SearchModel>Valuetype}" />
+                                        <layoutData>
+                                            <l:GridData span="XL2 L2 M6 S12" />
+                                        </layoutData>
+                                    </MultiComboBox>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement >
+                                <f:fields>
+                                    <Label design="Bold" class="sapUiTinyMarginTop" textAlign="End" showColon="true" text="{i18n>outputType}">
+                                        <layoutData>
+                                            <l:GridData span="XL4 L4 M6 S12" />
+                                        </layoutData>
+                                    </Label>
+                                    <MultiComboBox id="outputTypeMCBox" selectionChange="handleoutputTypeSelectionChange" selectionFinish="handleoutputTypeSelectionFinish" items="{path: 'SearchModel>/outputTypeData'}">
+                                        <core:Item key="{SearchModel>Kschl}" text="{SearchModel>Kschl}" />
+                                        <layoutData>
+                                            <l:GridData span="XL2 L2 M2 S12" />
+                                        </layoutData>
+                                    </MultiComboBox>
+                                    <Label design="Bold" class="sapUiTinyMarginTop" textAlign="End" showColon="true" text="{i18n>fileType}">
+                                        <layoutData>
+                                            <l:GridData span="XL1 L1 M2 S12" />
+                                        </layoutData>
+                                    </Label>
+                                    <MultiComboBox id="fileTypeMCBox" selectionChange="handleFileTypeSelectionChange" selectionFinish="handleFileTypeSelectionFinish" items="{path: 'SearchModel>/FileTypeData'}">
+                                        <core:Item key="{parts: ['SearchModel>FileType'], formatter: '.formatter.getFileType'}" text="{parts: ['SearchModel>FileType'], formatter: '.formatter.getFileType'}" />
+                                        <layoutData>
+                                            <l:GridData span="XL2 L2 M6 S12" />
+                                        </layoutData>
+                                    </MultiComboBox>
+                                </f:fields>
+                            </f:FormElement>
+                        </f:formElements>
+                    </f:FormContainer>
+                </f:formContainers>
+            </f:Form>
+
+
+
+            <OverflowToolbar >
+                <ToolbarSpacer />
+                <Button icon="sap-icon://search" press="onSearch" text="Search" tooltip="Search" type="Emphasized" />
+                <Button icon="sap-icon://sys-cancel" press="onClear" text="Clear" tooltip="Clear" type="Emphasized" />
+                <ToolbarSpacer />
+            </OverflowToolbar>
+
+            
+
+            <Table id="idReportTable" sticky="ColumnHeaders,HeaderToolbar" busy="{ReportModel>/isReportDataLoading}" items="{ path: 'ReportModel>/tableData'}">
+                <headerToolbar>
+                    <OverflowToolbar >
+
+                        <ToolbarSpacer />
+                        <u:FileUploader buttonText="Browse" width="200px" sameFilenameAllowed="true" change="onBrowsePress" class="BrowseClass" fileType="xlsx,xls" icon="sap-icon://browse-folder" id="fileUploader" multiple="false" name="archiveLabelsFileUploader" style="Emphasized" tooltip="Browse File" />
+                        <Button icon="sap-icon://excel-attachment" press="onPressExport" text="Export" enabled="{path: 'ReportModel>/ActualData', formatter: '.formatter.getExportBtnEnable'}" tooltip="Export File" type="Emphasized" />
+                        <ToolbarSeparator />
+                        <Button class="sapUiSmallMarginEnd" text="{i18n>sort}" tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed"/>
+                        <Select selectedKey="{ReportModel>/noOfTableRows}" items="{path: 'visibleRows>/visibleRowsCount'}" change="onFirstPress">
+                            <core:Item key="{visibleRows>count}" text="{visibleRows>count}" />
+                        </Select>
+                        <Button id="BtnFirstPressId1" icon="sap-icon://close-command-field" press="onFirstPress" text="" tooltip="First" enabled="{NavModel>/firstPageBtnEnable}" visible="{NavModel>/navButtonsVisible}" />
+                        <Button id="BtnPreviousPressId1" icon="sap-icon://navigation-left-arrow" press="onPreviousPress" text="" tooltip="Previous" enabled="{NavModel>/previousPageBtnEnable}" visible="{NavModel>/navButtonsVisible}" />
+                        <Text id="PageTextId1" text="{i18n>page} {ReportModel>/page} {i18n>of} {ReportModel>/totalPages}" visible="{NavModel>/navButtonsVisible}" />
+                        <Button id="BtnNextPressId1" icon="sap-icon://navigation-right-arrow" press="onNextPress" text="" tooltip="Next" enabled="{NavModel>/nextPageBtnEnable}" visible="{NavModel>/navButtonsVisible}" />
+                        <Button id="BtnLastPressId1" icon="sap-icon://open-command-field" press="onLastPress" text="" tooltip="Last" enabled="{NavModel>/lastPageBtnEnable}" visible="{NavModel>/navButtonsVisible}" />
+
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column hAlign="Center">
+                        <Text text="{i18n>salesOrganization}" />
+                    </Column>
+                    <Column hAlign="Center">
+                        <Text text="{i18n>billingType}" />
+                    </Column>
+                    <Column hAlign="Center">
+                        <Text text="{i18n>outputType}" />
+                    </Column>
+                    <Column hAlign="Center">
+                        <Text text="{i18n>langKey}" />
+                    </Column>
+                    <Column hAlign="Center" width="100px">
+                        <Text text="{i18n>valueType}" />
+                    </Column>
+                    <Column hAlign="Center" width="100px">
+                        <Text text="{i18n>fileType}" />
+                    </Column>
+                    <Column hAlign="Center">
+                        <Text text="{i18n>fileGroupID}" />
+                    </Column>
+                    <Column hAlign="Begin">
+                        <Text text="{i18n>fileGroup}" />
+                    </Column>
+                    <Column hAlign="Begin">
+                        <Text text="{i18n>description}" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem >
+                        <cells>
+                            <HBox justifyContent="Center">
+                                <ObjectIdentifier title="{ReportModel>salesOrg}" visible="{= ${ReportModel>/isBrowseData}===false?true:false}" />
+                                <Input showSuggestion="false" value="{ReportModel>salesOrg}" visible="{ReportModel>/isBrowseData}" />
+                            </HBox>
+                            <HBox justifyContent="Center">
+                                <Text text="{ReportModel>invoiceType}" visible="{= ${ReportModel>/isBrowseData}===false?true:false}" />
+                                <Input showSuggestion="false" value="{ReportModel>invoiceType}" visible="{ReportModel>/isBrowseData}" />
+                            </HBox>
+                            <HBox justifyContent="Center">
+                                <Text text="{ReportModel>outputType}" visible="{= ${ReportModel>/isBrowseData}===false?true:false}"/>
+                                <Input showSuggestion="false" value="{ReportModel>outputType}" visible="{ReportModel>/isBrowseData}" />
+                            </HBox>
+                            <HBox justifyContent="Center">
+                                <Text text="{ReportModel>langKey}" visible="{= ${ReportModel>/isBrowseData}===false?true:false}" />
+                                <Input showSuggestion="false" value="{ReportModel>langKey}" visible="{ReportModel>/isBrowseData}" />
+                            </HBox>
+                            <HBox justifyContent="Center">
+                                <Text text="{ReportModel>valueType}" visible="{= ${ReportModel>/isBrowseData}===false?true:false}" />
+                                <Input showSuggestion="false" value="{ReportModel>valueType}" visible="{ReportModel>/isBrowseData}" />
+                            </HBox>
+                            <HBox justifyContent="Center">
+                                <Text text="{ReportModel>fileType}" visible="{= ${ReportModel>/isBrowseData}===false?true:false}" />
+                                <Input showSuggestion="false" value="{ReportModel>fileType}" visible="{ReportModel>/isBrowseData}" />
+                            </HBox>
+                            <HBox justifyContent="Center">
+                                <Text text="{ReportModel>fileGid}" visible="{= ${ReportModel>/isBrowseData}===false?true:false}" />
+                                <Input showSuggestion="false" value="{ReportModel>fileGid}" visible="{ReportModel>/isBrowseData}" />
+                            </HBox>
+                            <HBox >
+                                <Text text="{ReportModel>fileGroup}" visible="{= ${ReportModel>/isBrowseData}===false?true:false}" />
+                                <Input showSuggestion="false" value="{ReportModel>fileGroup}" visible="{ReportModel>/isBrowseData}" />
+                            </HBox>
+                            <HBox justifyContent="Center">
+                                <Input showSuggestion="false" value="{ReportModel>descriptions}" change="fnDescriptionChange" visible="{= ${ReportModel>/isBrowseData}===false?true:false}" />
+                                <Input showSuggestion="false" value="{ReportModel>descriptions}" visible="{ReportModel>/isBrowseData}" />
+                            </HBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button class="sapUiSmallMarginEnd" text="{i18n>sort}" tooltip="Sort" icon="sap-icon://sort" press="handleSortButtonPressed"/>
+                <Select selectedKey="{ReportModel>/noOfTableRows}" items="{path: 'visibleRows>/visibleRowsCount'}" change="onFirstPress">
+                    <core:Item key="{visibleRows>count}" text="{visibleRows>count}" />
+                </Select>
+                <Button id="BtnFirstPressId" icon="sap-icon://close-command-field" press="onFirstPress" text="" tooltip="First" enabled="{NavModel>/firstPageBtnEnable}" visible="{NavModel>/navButtonsVisible}" />
+                <Button id="BtnPreviousPressId" icon="sap-icon://navigation-left-arrow" press="onPreviousPress" text="" tooltip="Previous" enabled="{NavModel>/previousPageBtnEnable}" visible="{NavModel>/navButtonsVisible}" />
+                <Text id="PageTextId" text="{i18n>page} {ReportModel>/page} {i18n>of} {ReportModel>/totalPages}" visible="{NavModel>/navButtonsVisible}" />
+                <Button id="BtnNextPressId" icon="sap-icon://navigation-right-arrow" press="onNextPress" text="" tooltip="Next" enabled="{NavModel>/nextPageBtnEnable}" visible="{NavModel>/navButtonsVisible}" />
+                <Button id="BtnLastPressId" icon="sap-icon://open-command-field" press="onLastPress" text="" tooltip="Last" enabled="{NavModel>/lastPageBtnEnable}" visible="{NavModel>/navButtonsVisible}" />
+            </OverflowToolbar>
+        </content>
+
+        <footer>
+            <OverflowToolbar id="otbFooter">
+                <ToolbarSpacer />
+                <Button type="Emphasized" text="Save" enabled="{parts: ['ReportModel>/isBrowseData', 'ReportModel>/ActualData'], formatter: '.formatter.getSaveBtnEnable'}" press="fnSave" />
+                <Button type="Emphasized" text="Cancel" press="fnCancel" />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>
